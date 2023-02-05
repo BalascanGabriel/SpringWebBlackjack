@@ -15,9 +15,6 @@ public class ControllerTest {
 	// protected void doGet(HttpServletRequest req, HttpServletResponse res){
 	//   req.getRequestDispatcher("/pages/about.jsp").forward(req, res);
 	// 
-	
-	
-	
 	/*
 	 in application.properties avem:
 	 spring.mvc.view.prefix=/pages/

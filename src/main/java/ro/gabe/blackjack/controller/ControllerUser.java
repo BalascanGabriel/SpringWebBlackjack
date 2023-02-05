@@ -16,6 +16,7 @@ import ro.gabe.blackjack.model.User;
 @Controller
 public class ControllerUser {
 
+	
 	@Autowired
 	private DaoUser dao;
 	
