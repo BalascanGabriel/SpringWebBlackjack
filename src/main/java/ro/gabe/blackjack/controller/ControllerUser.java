@@ -31,6 +31,11 @@ public class ControllerUser {
 		return "register";
 	}
 	
+	@RequestMapping(value="/gamepage")
+	public String gamePage() {
+		return "gamepage";
+	}
+	
 	@RequestMapping(value="/user-lista")
 	public String paginaUserii(Model model) {
 		Iterable<User> useriiDb = dao.findAll(); // new ArrayList<>();
@@ -40,19 +45,23 @@ public class ControllerUser {
 	
 	@RequestMapping(value="/save-register", method = RequestMethod.POST)
 	public String processRegister(@ModelAttribute User newUser) {
-//		String username = req.getParameter("username");
-//		String email = req.getParameter("email");
-//		String password = req.getParameter("password");
-//		User newUser = new User();
-//		newUser.setEmail(email);
-//		newUser.setPassword(password);
-//		newUser.setName(username);
-		
-		
+//		
 		 dao.save(newUser);
 		 System.out.println("SAVING TO DB: " + newUser);
 		
 		return "redirect:/despre";
 	}
 	
+	@RequestMapping(value="/save-login", method = RequestMethod.POST)
+	public String processLogin(@ModelAttribute User user) {
+		System.out.println("Login parameters " + user);
+		
+		User dbUser = dao.findByNameAndPassword(user.getName(), user.getPassword());
+	    if (dbUser != null) {
+	        return "redirect:/gamepage";
+	    } else {
+	        
+	        return "redirect:/login";
+	    }
+	}
 }

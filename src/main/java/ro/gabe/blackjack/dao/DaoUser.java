@@ -13,4 +13,5 @@ public interface DaoUser extends CrudRepository<User, Integer>{
 	
 	public User findByName(String name);
 	
+	public User findByNameAndPassword(String name, String password);
 }

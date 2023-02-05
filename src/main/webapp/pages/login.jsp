@@ -3,12 +3,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="style.css" rel="stylesheet" type="text/css">
-
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<h2>Login here</h2>
+	
+
+<form method="post" action="/save-login" >
+	<label>Username:</label>
+	<input type="text" name="name" ><br/>
+	<label>Password:</label>
+	<input type="password" name="password"><br/>
+	<input type="hidden" name="action" value="loginSubmit"> 
+	<input type="submit" value="Submit">
+</form>
 </body>
 </html>
