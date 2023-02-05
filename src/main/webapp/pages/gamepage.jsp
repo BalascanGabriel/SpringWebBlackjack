@@ -11,8 +11,8 @@
 		<a href="/BlackjackWeb/LogoutController">Logout</a>
 	</div>
 
-  <h1>Select a Game</h1>
-  <form method="post">
+  <h1>Select a Game : </h1>
+  <form method="post" action="start-game">
     <div class="game-options">
         <div class="game-option">
             <input type="radio" name="game" value="blackjack" id="blackjack"/>
