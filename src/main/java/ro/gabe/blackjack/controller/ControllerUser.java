@@ -6,12 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ro.gabe.blackjack.dao.DaoUser;
 import ro.gabe.blackjack.model.User;
+import org.springframework.ui.Model;
 
 @Controller
 public class ControllerUser {
@@ -53,14 +55,14 @@ public class ControllerUser {
 	}
 	
 	@RequestMapping(value="/save-login", method = RequestMethod.POST)
-	public String processLogin(@ModelAttribute User user) {
+	public String processLogin(@ModelAttribute User user, ModelMap model) {
 		System.out.println("Login parameters " + user);
 		
 		User dbUser = dao.findByNameAndPassword(user.getName(), user.getPassword());
 	    if (dbUser != null) {
 	        return "redirect:/gamepage";
 	    } else {
-	        
+	        model.addAttribute("loginFailed", true);
 	        return "redirect:/login";
 	    }
 	}

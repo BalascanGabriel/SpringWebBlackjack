@@ -21,6 +21,8 @@ form {
 	text-align: left;
 	border-radius: 10px;
 	box-shadow: 0px 0px 10px #888888;
+	max-width: 500px;
+	margin: 0 auto;
 }
 
 label, input[type="submit"] {
@@ -55,4 +57,29 @@ input[type="submit"] {
 	margin-top:10px;
 }
 
+@media (max-width: 500px) {
+	form {
+		padding: 20px;
+	}
 
+	input[type="text"], input[type="password"],input[type="email"] {
+		width: 90%;
+		padding: 10px;
+		font-size: 18px;
+	}
+
+	h1 {
+		font-size: 30px;
+		margin-top: 30px;
+	}
+
+	label {
+		font-size: 18px;
+	}
+
+	input[type="submit"] {
+		font-size: 18px;
+		padding: 10px;
+		margin-top: 5px;
+	}
+}

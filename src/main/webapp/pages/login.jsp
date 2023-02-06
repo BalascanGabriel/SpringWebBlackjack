@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,5 +19,14 @@
 	<input type="hidden" name="action" value="loginSubmit"> 
 	<input type="submit" value="Submit">
 </form>
+
+<c:if test="${loginFailed != null}">
+
+  <script>
+    alert("Login failed. Please try again.");
+    console.log("Code");
+  </script>
+</c:if>
+
 </body>
 </html>
