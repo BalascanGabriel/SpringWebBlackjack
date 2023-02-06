@@ -1,262 +1,193 @@
+<!DOCTYPE html>
 <html>
-    <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
-          
-    <style>
-        body {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;
-    font-family: Arial, sans-serif;
+<head>
+  <meta charset="UTF-8">
+  <title>Blackjack</title>
+  <style>
+  body {
+	background-color: #f2f2f2;
+	font-family: Arial, sans-serif;
 	text-align: center;
 	background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
-    font-weight: bold;
-    color: white;
-    text-align: center;
-	}
+}
 
-		h1 {
-    color: goldenrod;
-	}
+    #dealer-hand, #player-hand {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .card {
+      width: 80px;
+      height: 120px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Blackjack</h1>
+  <div id="dealer-hand"></div>
+  <div id="player-hand"></div>
+  <button id="start-button">Start Game</button>
+  <button id="hit-button" disabled>Hit</button>
+  <button id="stand-button" disabled>Stand</button>
+  <script>
+    const deck = [];
+    const suits = ['hearts', 'diamonds', 'spades', 'clubs'];
+    const values = [
+      'ace', 'king', 'queen', 'jack',
+      '10', '9', '8', '7', '6',
+      '5', '4', '3', '2'
+    ];
 
-		#message-el {
-    font-style: italic;
-	}
+    for (let suit in suits) {
+      for (let value in values) {
+        deck.push(values[value] + '_of_' + suits[suit]);
+      }
+    }
 
-		button {
-    color: #016f32;
-    width: 150px;
-    background: goldenrod;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-weight: bold;
-    border: none;
-    border-radius: 2px;
-    margin-bottom: 2px;
-    margin-top: 2px;
-	}
-        </style>
-    </head>
-    <body>
-        <h1>Blackjack</h1>
-       <p id="text-area">Welcome to blackJack</p>
-    	<button id="new-game-button">New game</button>
-    	<button id="hit-button">Hit</button>
-    	<button id="stay-button">Stand</button>
-        <script>
-        
-      //card variables
-        let suits = ["Hearts", "Clubs", "Diamonds", "Spades"];
-        let values = [
-          "Ace",
-          "King",
-          "Queen",
-          "Jack",
-          "Ten",
-          "Nine",
-          "Eight",
-          "Seven",
-          "Six",
-          "Five",
-          "Four",
-          "Three",
-          "Two"
-        ];
-        //dom variables
-        let textArea = document.getElementById("text-area");
-        let newGameButton = document.getElementById("new-game-button");
-        let hitButton = document.getElementById("hit-button");
-        let stayButton = document.getElementById("stay-button");
+    let dealerCards = [];
+    let playerCards = [];
 
-        //Game Variables
-        let gamesStarted = false;
-        let gameOver = false;
-        let playerWon = false;
-        let dealerCards = [];
-        let playerCards = [];
-        let dealerScore = 0;
-        let playerScore = 0;
-        let deck = [];
+    function shuffleDeck() {
+      for (let i = 0; i < deck.length; i++) {
+        let randomIndex = Math.floor(Math.random() * deck.length);
+        let temp = deck[i];
+        deck[i] = deck[randomIndex];
+        deck[randomIndex] = temp;
+      }
+    }
 
-        hitButton.style.display = "none";
-        stayButton.style.display = "none";
+    function getNextCard() {
+      return deck.shift();
+    }
 
-        newGameButton.addEventListener("click", function() {
-          gamesStarted = true;
-          gameOver = false;
-          playerWon = false;
+    function getCardNumericValue(card) {
+      switch(card.split('_')[0]) {
+        case 'jack':
+        case 'queen':
+        case 'king':
+          return 10;
+        case 'ace':
+          return 11;
+        default:
+          return card.split('_')[0];
+      }
+    }
 
-          deck = createDeck();
-          shuffleDeck(deck);
-          dealerCards = [getNextCard(), getNextCard()];
-          playerCards = [getNextCard(), getNextCard()];
+    function updateScores() {
+      let dealerScore = 0;
+      let playerScore = 0;
+      for (let i=0; i < dealerCards.length; i++) {
+        dealerScore += getCardNumericValue(dealerCards[i]);
+      }
+      for (let i=0; i < playerCards.length; i++) {
+        playerScore += getCardNumericValue(playerCards[i]);
+      }
 
-          newGameButton.style.display = "none";
-          hitButton.style.display = "inline";
-          stayButton.style.display = "inline";
-          showStatus();
-        });
+      return {
+        dealerScore: dealerScore,
+        playerScore
+      }
+      }
+    function checkForEndOfGame() {
+    	  updateScores();
 
-        hitButton.addEventListener("click", function() {
-          playerCards.push(getNextCard());
-          checkForEndOfGame();
-          showStatus();
-        });
+    	  if (dealerScore === 21) {
+    	    // dealer wins with a score of 21
+    	  } else if (playerScore === 21) {
+    	    // player wins with a score of 21
+    	  } else if (dealerScore > 21) {
+    	    // player wins, dealer busts
+    	  } else if (playerScore > 21) {
+    	    // dealer wins, player busts
+    	  }
+    	}
 
-        stayButton.addEventListener("click", function() {
-          gameOver = true;
-          checkForEndOfGame();
-          showStatus();
-        });
+    	function showStatus() {
+    	  let dealerScore = updateScores().dealerScore;
+    	  let playerScore = updateScores().playerScore;
 
-        function createDeck() {
-          let deck = [];
-          for (let suitIdx = 0; suitIdx < suits.length; suitIdx++) {
-            for (let valueIdx = 0; valueIdx < values.length; valueIdx++) {
-              let card = {
-                suit: suits[suitIdx],
-                value: values[valueIdx]
-              };
-              deck.push(card);
-            }
-          }
-          return deck;
-        }
+    	  checkForEndOfGame();
 
-        function showStatus() {
-          if (!gamesStarted) {
-            textArea.innerText = "Welcome to BlackJack";
-            return;
-          }
+    	  let dealerScoreBoard = document.getElementById('dealer-score');
+    	  let playerScoreBoard = document.getElementById('player-score');
 
-          let dealerCardString = "";
-          for (let i = 0; i < dealerCards.length; i++) {
-            dealerCardString += getCardString(dealerCards[i]) + "\n";
-          }
+    	  dealerScoreBoard.innerText = 'Dealer Score: ' + dealerScore;
+    	  playerScoreBoard.innerText = 'Player Score: ' + playerScore;
 
-          let playerCardString = "";
-          for (let i = 0; i < playerCards.length; i++) {
-            playerCardString += getCardString(playerCards[i]) + "\n";
-          }
+    	  if (gameOver) {
+    	    if (playerWon) {
+    	      playerScoreBoard.innerText += " YOU WIN!";
+    	    } else {
+    	      dealerScoreBoard.innerText += " DEALER WINS";
+    	    }
+    	    for (var i=0; i < deck.length; i++) {
+    	      deck[i] = 'blank';
+    	    }
+    	    newGameButton.style.display = 'inline';
+    	    hitButton.style.display = 'none';
+    	    stayButton.style.display = 'none';
+    	  }
+    	}
 
-          updateScores();
+    	function dealCards() {
+    	  playerCards = [getNextCard(), getNextCard()];
+    	  dealerCards = [getNextCard(), getNextCard()];
+    	}
 
-          textArea.innerText =
-            "Dealer has: \n " +
-            dealerCardString +
-            "(score:" +
-            dealerScore +
-            ")\n\n" +
-            "Player has: \n " +
-            playerCardString +
-            "(score:" +
-            playerScore +
-            ")\n\n";
+    	function createBoard() {
+    	  let dealerHand = document.getElementById('dealer-hand');
+    	  let playerHand = document.getElementById('player-hand');
 
-          if (gameOver) {
-            if (playerWon) {
-              textArea.innerText += "You Win!";
-            } else {
-              textArea.innerText += "Dealer Wins!";
-            }
-            newGameButton.style.display = "inline";
-            hitButton.style.display = "none";
-            stayButton.style.display = "none";
-          }
-        }
+    	  for (let i=0; i < dealerCards.length; i++) {
+    	    let cardImage = document.createElement('div');
+    	    cardImage.classList.add('card');
+    	    cardImage.style.backgroundImage = 'url(img/' + dealerCards[i] + '.png)';
+    	    dealerHand.appendChild(cardImage);
+    	  }
 
-        function shuffleDeck(deck) {
-          for (let i = 0; i < deck.length; i++) {
-            let swapIdx = Math.trunc(Math.random() * deck.length);
-            let tmp = deck[swapIdx];
-            deck[swapIdx] = deck[i];
-            deck[i] = tmp;
-          }
-        }
+    	  for (let i=0; i < playerCards.length; i++) {
+    	    let cardImage = document.createElement('div');
+    	    cardImage.classList.add('card');
+    	    cardImage.style.backgroundImage = 'url(img/' + playerCards[i] + '.png)';
+    	    playerHand.appendChild(cardImage);
+    	  }
+    	}
 
-        function getCardString(card) {
-          return card.value + " of " + card.suit;
-        }
+    	function startGame() {
+    	  shuffleDeck();
+    	  dealCards();
+    	  createBoard();
+    	  showStatus();
+    	}
 
-        function getNextCard() {
-          return deck.shift();
-        }
+    	let startButton = document.getElementById('start-button');
+    	startButton.addEventListener('click', startGame);
 
-        function getCardNumericValue(card) {
-          switch (card.value) {
-            case "Ace":
-              return 1;
-            case "Two":
-              return 2;
-            case "Three":
-              return 3;
-            case "Four":
-              return 4;
-            case "Five":
-              return 5;
-            case "Six":
-              return 6;
-            case "Seven":
-              return 7;
-            case "Eight":
-              return 8;
-            case "Nine":
-              return 9;
-            default:
-              return 10;
-          }
-        }
+    	let hitButton = document.getElementById('hit-button');
+    	hitButton.addEventListener('click', function() {
+    	  playerCards.push(getNextCard());
+    	  createBoard();
+    	  showStatus();
+    	});
 
-        function getScore(cardArray) {
-          let score = 0;
-          let hasAce = false;
-          for (let i = 0; i < cardArray.length; i++) {
-            let card = cardArray[i];
-            score += getCardNumericValue(card);
-            if (card.value === "Ace") {
-              hasAce = true;
-            }
-          }
-          if (hasAce && score + 10 <= 21) {
-            return score + 10;
-          }
-          return score;
-        }
+    	const standButton = document.getElementById('stand-button');
+    	standButton.addEventListener('click', function() {
+    	  playerWon = false;
+    	  gameOver = true;
+    	  while(dealerScore < playerScore && playerScore <= 21 && dealerScore <= 21) {
+    	    dealerCards.push(getNextCard());
+    	    updateScores();
+    	  }
 
-        function updateScores() {
-          dealerScore = getScore(dealerCards);
-          playerScore = getScore(playerCards);
-        }
+    	  checkForEndOfGame();
+    	  showStatus();
+    	});
 
-        function checkForEndOfGame() {
-          updateScores();
-          if (gameOver) {
-            //let the dealer take cards
-            while (
-              dealerScore < playerScore &&
-              playerScore <= 21 &&
-              dealerScore <= 21
-            ) {
-              dealerCards.push(getNextCard());
-              updateScores();
-            }
-          }
 
-          if (playerScore > 21) {
-            playerWon = false;
-            gameOver = true;
-          } else if (dealerScore > 21) {
-            playerWon = true;
-            gameOver = true;
-          } else if (gameOver) {
-            if (playerScore > dealerScore) {
-              playerWon = true;
-            } else {
-              playerWon = false;
-            }
-            // newGameButton.style.display = "inline";
-            // hitButton.style.display = "none";
-            // stayButton.style.display = "none";
-          }
-        }
-        </script>
-    </body>
-    
+
+
+</script>
+</body>
 </html>
