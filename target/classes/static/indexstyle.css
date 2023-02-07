@@ -2,7 +2,8 @@
 @charset "ISO-8859-1";
 body {
   font-family: 'Montserrat', sans-serif; /* Use a fancy font for the text */
-background: linear-gradient(to right, #2b2e4a, #462066); background-attachment: fixed;
+	background: linear-gradient(to right, #2b2e4a, #462066); background-attachment: fixed;
+  background-image: url('/img/background.jpg');
   background-repeat: no-repeat;
   background-position: center center;
   height: 100vh;
