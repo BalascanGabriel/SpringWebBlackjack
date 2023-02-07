@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ro.gabe.blackjack.dao.DaoUser;
 import ro.gabe.blackjack.model.User;
@@ -55,14 +56,14 @@ public class ControllerUser {
 	}
 	
 	@RequestMapping(value="/save-login", method = RequestMethod.POST)
-	public String processLogin(@ModelAttribute User user, ModelMap model) {
+	public String processLogin(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
 		System.out.println("Login parameters " + user);
 		
 		User dbUser = dao.findByNameAndPassword(user.getName(), user.getPassword());
 	    if (dbUser != null) {
 	        return "redirect:/gamepage";
 	    } else {
-	        model.addAttribute("loginFailed", true);
+	    	redirectAttributes.addFlashAttribute("loginFailed", true);
 	        return "redirect:/login";
 	    }
 	}

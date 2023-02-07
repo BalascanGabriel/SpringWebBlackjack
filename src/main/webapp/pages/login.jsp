@@ -13,17 +13,26 @@
 
 <form method="post" action="/save-login" >
 	<label>Username:</label>
-	<input type="text" name="name" ><br/>
+	<input type="text" name="name" id="name"><br/>
 	<label>Password:</label>
-	<input type="password" name="password"><br/>
+	<input type="password" name="password" id="password"><br/>
 	<input type="hidden" name="action" value="loginSubmit"> 
+	<p id="failed">Login failed ! </p>
 	<input type="submit" value="Submit">
 </form>
 
 <c:if test="${loginFailed != null}">
 
   <script>
-    alert("Login failed. Please try again.");
+    loginP = document.getElementById("failed");
+    inputN = document.getElementById("name");
+    inputP = document.getElementById("password");
+    loginP.style.display = "block";
+    inputN.style.animationPlayState = "running";
+    inputN.style.borderColor="red";
+    inputP.style.animationPlayState = "running";
+    inputP.style.borderColor="red";
+    console.log("LoginFailed value: " + "${loginFailed}");
     console.log("Code");
   </script>
 </c:if>

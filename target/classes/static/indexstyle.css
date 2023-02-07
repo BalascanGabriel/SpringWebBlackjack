@@ -2,24 +2,49 @@
 @charset "ISO-8859-1";
 body {
   font-family: 'Montserrat', sans-serif; /* Use a fancy font for the text */
-  background-image: linear-gradient(#ff9966, #ff5e62); /* Use a fancy gradient background */
-}
-
+background: linear-gradient(to right, #2b2e4a, #462066); background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100vh;
+  animation: background-change 30s linear infinite;}
+  
+  @keyframes background-change {
+	0% {
+	background-position: center center;
+	}
+	100% {
+	background-position: 100% center;
+	}
+	}
 #header {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 300px;
+  animation: header-text 1s ease-out;
 }
 
+@keyframes header-text {
+	0% {
+		opacity: 0;
+		transform: translateY(-50px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+
 #header h1 {
-  font-size: 4em; /* Increase the size of the heading */
+  font-size: 4em;
   text-transform: uppercase;
   font-weight: bold;
-  text-shadow: 2px 2px #ffcc99; /* Add a text shadow */
-  background-image: linear-gradient(#ffcc99, #ff9933); /* Add a gradient background to the heading */
+  text-shadow: 2px 2px #ffcc99;
+  background-image: linear-gradient(#ffcc99, #ff9933);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: header-text 1s ease-out;
 }
 
 #main {
@@ -30,6 +55,18 @@ body {
   border-radius: 20px; /* Add a border radius to the main section */
   background-color: rgba(255, 255, 255, 0.8); /* Use a semi-transparent background color for the main section */
   box-shadow: 2px 2px 10px #cccccc; /* Add a box shadow to the main section */
+  animation: main-section 1s ease-out;
+}
+
+@keyframes main-section {
+	0% {
+		opacity: 0;
+		transform: translateY(50px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 #promotions {
@@ -39,6 +76,18 @@ body {
   border-radius: 20px; /* Add a border radius to the promotions section */
   box-shadow: 2px 2px 10px #cccccc; /* Add a box shadow to the promotions section */
   text-align: center;
+  animation: promotions-section 1s ease-out;
+}
+
+@keyframes promotions-section {
+	0% {
+		opacity: 0;
+		transform: translateX(-50px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
 }
 
 #footer {
