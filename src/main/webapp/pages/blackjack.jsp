@@ -5,7 +5,8 @@
   <title>Blackjack</title>
   <link href="css/blackjack.css" rel="stylesheet" type="text/css">
 
-
+<!-- Bug spotted dealer has 21 from the first hand -->
+<!-- Also if player has 21 from the first hand -->
   
 </head>
 <body>

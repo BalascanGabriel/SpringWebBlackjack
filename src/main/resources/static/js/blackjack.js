@@ -138,7 +138,7 @@ function showStatus() {
 	if (resultEndGame.gameOver) {
 		if (resultEndGame.win === 'player') {
 			playerScoreBoard.innerText += " YOU WIN!"; // TODO: modif
-		} else {
+		} else if(resultEndGame.win != 'player') {
 			dealerScoreBoard.innerText += " DEALER WINS";
 		}
 		for (var i = 0; i < deck.length; i++) {
@@ -207,11 +207,16 @@ hitButton.addEventListener('click', function() {
 
 const standButton = document.getElementById('stand-button');
 standButton.addEventListener('click', function() {
-	playerWon = false;
-	gameOver = true;
-	while (dealerScore < playerScore && playerScore <= 21 && dealerScore <= 21) {
+	let resultUpdate = updateScores();
+	let result = { gameOver: false, win: null, bust: false };
+	while (resultUpdate.dealerScore <= 17 || resultUpdate.dealerScore <= 21 ) {
 		dealerCards.push(getNextCard());
-		updateScores();
+		createBoard();
+		resultUpdate = updateScores();
+		if(resultUpdate.dealerScore >= 17 || resultUpdate.dealerScore <= 21){
+			break;
+		}
+		
 	}
 
 	let resultEnd = checkForEndOfGame();
