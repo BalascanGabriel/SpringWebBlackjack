@@ -8,7 +8,16 @@
   background-repeat: no-repeat;
   background-position: center center;
   height: 100vh;
-  animation: background-change 30s linear infinite;}
+  animation: background-change 30s linear infinite;
+ }
+  
+ #player-info{
+  	padding-bottom:15px;
+  	text-align: left;
+  	size: 15px;
+  	margin : 10px;
+  	padding:10px;
+  } 
   
   @keyframes background-change {
 	0% {

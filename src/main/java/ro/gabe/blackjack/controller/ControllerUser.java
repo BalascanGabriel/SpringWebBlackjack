@@ -3,6 +3,9 @@ package ro.gabe.blackjack.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +32,7 @@ public class ControllerUser {
 		return "login";
 	}
 	
+	
 	@RequestMapping(value="/register")
 	public String register() {
 		return "register";
@@ -37,6 +41,11 @@ public class ControllerUser {
 	@RequestMapping(value="/gamepage")
 	public String gamePage() {
 		return "gamepage";
+	}
+	
+	@RequestMapping(value="/logout")
+	public String logout() {
+		return "logout";
 	}
 	
 	@RequestMapping(value="/user-lista")
@@ -56,15 +65,22 @@ public class ControllerUser {
 	}
 	
 	@RequestMapping(value="/save-login", method = RequestMethod.POST)
-	public String processLogin(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
+	public String processLogin(@ModelAttribute User user, RedirectAttributes redirectAttributes, HttpSession session) {
 		System.out.println("Login parameters " + user);
 		
 		User dbUser = dao.findByNameAndPassword(user.getName(), user.getPassword());
 	    if (dbUser != null) {
+	    	session.setAttribute("user", dbUser);
 	        return "redirect:/gamepage";
 	    } else {
 	    	redirectAttributes.addFlashAttribute("loginFailed", true);
 	        return "redirect:/login";
 	    }
+	}
+	
+	@RequestMapping(value="/logout", method = RequestMethod.POST)
+	public String processLogout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/login";
 	}
 }

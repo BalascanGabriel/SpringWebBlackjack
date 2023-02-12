@@ -11,11 +11,16 @@
 </head>
 <body>
   <h1>Blackjack</h1>
+  <div id="player-info">
+  	<h3>Player : ${user.name}</h3>
+  	<h4>Balance : ${user.balance }</h4>
+  </div>
   <div id="dealer-hand"></div>
   <div id="player-hand"></div>
   <button id="start-button">Start Game</button>
   <button id="hit-button" disabled>Hit</button>
   <button id="stand-button" disabled>Stand</button>
+  
   
   <div>
   	<div id="dealer-score"></div>

@@ -6,6 +6,11 @@
   </head>
   <body>
  
+ <div id="player-info">
+  	<h3>Player : ${user.name}</h3>
+  	<h4>Balance : ${user.balance }</h4>
+  </div>
+ 
     <table>
       <tr>
         <td><img src='img/1.png' /></td>

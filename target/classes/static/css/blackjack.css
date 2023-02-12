@@ -10,6 +10,19 @@
   height: 100vh;
   animation: background-change 30s linear infinite;}
   
+  h3{
+  	margin:0px;
+  	padding:0px;
+  }
+  
+   h4{
+  	margin:0px;
+  	padding:0px;
+  }
+  
+  #player-info{
+  	padding-bottom:15px;
+  }
   @keyframes background-change {
 	0% {
 	background-position: center center;

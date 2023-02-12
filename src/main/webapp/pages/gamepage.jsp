@@ -7,11 +7,25 @@
 </head>
 <body>
 	
-	<div>
-		<a href="/BlackjackWeb/LogoutController">Logout</a>
-	</div>
+<div id="header">
+		<div id="header-text">
+    		<h2>Welcome, ${user.name}!</h2>
+    		<p>Current balance : ${user.balance}</p>
+    		
+  		</div>
+  		<div id="user-options">
+			<form action="account" method="post">
+				<input type="submit" value="Account">
+			</form>
+			<form action="logout" method="post">
+				<input type="submit" value="Logout">
+			</form>
+		</div>
+</div>
+	
 
-  <h1>Select a Game : </h1>
+<div class="main" >
+	
   <form method="post" action="start-game">
     <div class="game-options">
         <div class="game-option">
@@ -37,5 +51,7 @@
     </div>
     <input type="submit" value="Start Game">
   </form>
+</div>
+  
 </body>
 </html>
