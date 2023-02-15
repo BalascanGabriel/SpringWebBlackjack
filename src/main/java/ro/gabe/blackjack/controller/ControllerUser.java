@@ -38,8 +38,11 @@ public class ControllerUser {
 		return "register";
 	}
 	
-	@RequestMapping(value="/gamepage")
-	public String gamePage() {
+	@RequestMapping(value="/secured/gamepage")
+	public String gamePage( HttpSession session) {
+//		if(session.getAttribute("user") == null) {
+//			return "redirect:/login";
+//		}
 		return "gamepage";
 	}
 	
@@ -48,7 +51,7 @@ public class ControllerUser {
 		return "logout";
 	}
 	
-	@RequestMapping(value="/user-lista")
+	@RequestMapping(value="/secured/user-lista")
 	public String paginaUserii(Model model) {
 		Iterable<User> useriiDb = dao.findAll(); // new ArrayList<>();
 		model.addAttribute("USERII", useriiDb);
@@ -71,7 +74,7 @@ public class ControllerUser {
 		User dbUser = dao.findByNameAndPassword(user.getName(), user.getPassword());
 	    if (dbUser != null) {
 	    	session.setAttribute("user", dbUser);
-	        return "redirect:/gamepage";
+	        return "redirect:/secured/gamepage";
 	    } else {
 	    	redirectAttributes.addFlashAttribute("loginFailed", true);
 	        return "redirect:/login";

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("/secured")
 public class ControllerGames {
 
 	@RequestMapping("/blackjack")
@@ -37,15 +38,15 @@ public class ControllerGames {
 	  public String startGame(@RequestParam("game") String game) {
 	    switch (game) {
 	      case "blackjack":
-	        return "redirect:/blackjack";
+	        return "redirect:/secured/blackjack";
 	      case "roulette":
-	        return "redirect:/roulette";
+	        return "redirect:/secured/roulette";
 	      case "coinflip":
-	        return "redirect:/coinflip";
+	        return "redirect:/secured/coinflip";
 	      case "slots":
-	        return "redirect:/slots";
+	        return "redirect:/secured/slots";
 	      default:
-	        return "redirect:/game-select";
+	        return "redirect:/secured/game-select";
 	    }
 	  }
 	}

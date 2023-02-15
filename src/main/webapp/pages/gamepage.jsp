@@ -2,10 +2,12 @@
 <html>
 <head>
   <title>Game Select</title>
-  <link href="css/style.css" rel="stylesheet" type="text/css">
-  
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
+	<script src="/js/gamepage.js"></script>  
 </head>
 <body>
+	
+
 	
 <div id="header">
 		<div id="header-text">
@@ -17,7 +19,7 @@
 			<form action="account" method="post">
 				<input type="submit" value="Account">
 			</form>
-			<form action="logout" method="post">
+			<form action="/logout" method="post">
 				<input type="submit" value="Logout">
 			</form>
 		</div>
@@ -26,7 +28,7 @@
 
 <div class="main" >
 	
-  <form method="post" action="start-game">
+  <form method="post" action="/secured/start-game">
     <div class="game-options">
         <div class="game-option">
             <input type="radio" name="game" value="blackjack" id="blackjack"/>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Blackjack</title>
-  <link href="css/blackjack.css" rel="stylesheet" type="text/css">
+  <link href="/css/blackjack.css" rel="stylesheet" type="text/css">
 
 <!-- Bug spotted dealer has 21 from the first hand -->
 <!-- Also if player has 21 from the first hand -->
@@ -27,6 +27,6 @@
   	<div id="player-score"></div>
   	
   </div>
- <script src="js/blackjack.js"></script>
+ <script src="/js/blackjack.js"></script>
 </body>
 </html>
