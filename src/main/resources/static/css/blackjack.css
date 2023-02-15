@@ -35,6 +35,7 @@
     #dealer-hand, #player-hand {
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
     }
     
     .card {

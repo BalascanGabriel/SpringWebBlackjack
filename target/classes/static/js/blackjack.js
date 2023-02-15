@@ -8,7 +8,7 @@ const values = [
 function generateDeck() {
 	for (let suit in suits) {
 		for (let value in values) {
-			deck.push(values[value] + '_of_' + suits[suit]);		
+			deck.push(values[value] + '_of_' + suits[suit]);
 		}
 	}
 }
@@ -90,9 +90,32 @@ function updateScores() {
 		playerScore: playerScore
 	}
 }
-function checkForEndOfGame() {
-	let resultUpdate = updateScores();
+function checkForEndOfGame(statusObj) {
 	let result = { gameOver: false, win: null, bust: false };
+	let resultUpdate = updateScores();
+
+	if (statusObj) {
+		if (statusObj.lastAction == 'stand') {
+			if (resultUpdate.dealerScore > 21) {
+				result.gameOver = true;
+				result.win = 'player';
+				result.bust = true;
+				return result;
+			} else if (resultUpdate.dealerScore > resultUpdate.playerScore){
+				result.gameOver = true;
+				result.win = 'dealer';
+				return result;
+
+			}else{
+				result.gameOver = true;
+				result.win = 'player';
+				return result;
+			}
+		}
+	}
+
+
+
 	if (resultUpdate.dealerScore === 21) {
 		// dealer wins with a score of 21
 		result.gameOver = true;
@@ -122,12 +145,13 @@ function endGame() {
 	showInGame(false);
 }
 
-function showStatus() {
+function showStatus(status) {
 	let res = updateScores();
 	let dealerScore = res.dealerScore; //  updateScores().dealerScore;
 	let playerScore = res.playerScore; // updateScores().playerScore;
 
-	let resultEndGame = checkForEndOfGame();
+	let resultEndGame = checkForEndOfGame(status);
+
 
 	let dealerScoreBoard = document.getElementById('dealer-score');
 	let playerScoreBoard = document.getElementById('player-score');
@@ -138,7 +162,7 @@ function showStatus() {
 	if (resultEndGame.gameOver) {
 		if (resultEndGame.win === 'player') {
 			playerScoreBoard.innerText += " YOU WIN!"; // TODO: modif
-		} else if(resultEndGame.win != 'player') {
+		} else if (resultEndGame.win != 'player') {
 			dealerScoreBoard.innerText += " DEALER WINS";
 		}
 		for (var i = 0; i < deck.length; i++) {
@@ -161,7 +185,7 @@ function dealCards() {
 	dealerCards = [getNextCard(), getNextCard()];
 }
 
-function createBoard() {
+function createBoard(secondCardHidden = true) {
 	let dealerHand = document.getElementById('dealer-hand');
 	let playerHand = document.getElementById('player-hand');
 
@@ -173,15 +197,23 @@ function createBoard() {
 	playerHand.innerHTML = '';
 	for (let i = 0; i < dealerCards.length; i++) {
 		let cardImage = document.createElement('div');
+		
 		cardImage.classList.add('card');
-		cardImage.style.backgroundImage = 'url(img/' + dealerCards[i] + '.png)';
+		cardImage.style.backgroundImage = 'url(/img/' + dealerCards[i] + '.png)';
 		dealerHand.appendChild(cardImage);
+	}
+	let secondCardDiv = document.querySelector('#dealer-hand .card:nth-child(2)')
+	if(secondCardHidden){
+		
+		secondCardDiv.style.backgroundImage	= 'url(/img/' + 'card-back' + '.png)'
+	}else{
+		secondCardDiv.style.backgroundImage = 'url(/img/' + dealerCards[1] + '.png)';
 	}
 
 	for (let i = 0; i < playerCards.length; i++) {
 		let cardImage = document.createElement('div');
 		cardImage.classList.add('card');
-		cardImage.style.backgroundImage = 'url(img/' + playerCards[i] + '.png)';
+		cardImage.style.backgroundImage = 'url(/img/' + playerCards[i] + '.png)';
 		playerHand.appendChild(cardImage);
 	}
 }
@@ -193,6 +225,11 @@ function startGame() {
 	createBoard();
 	showStatus();
 	showInGame(true);
+
+	let resultEndGame = checkForEndOfGame();
+	if (resultEndGame.gameOver) {
+		endGame();
+	}
 }
 
 let startButton = document.getElementById('start-button');
@@ -208,20 +245,16 @@ hitButton.addEventListener('click', function() {
 const standButton = document.getElementById('stand-button');
 standButton.addEventListener('click', function() {
 	let resultUpdate = updateScores();
-	let result = { gameOver: false, win: null, bust: false };
-	while (resultUpdate.dealerScore <= 17 || resultUpdate.dealerScore <= 21 ) {
+	while (resultUpdate.dealerScore < 17) {
 		dealerCards.push(getNextCard());
-		createBoard();
+		createBoard(false);
 		resultUpdate = updateScores();
-		if(resultUpdate.dealerScore >= 17 || resultUpdate.dealerScore <= 21){
-			break;
-		}
-		
 	}
 
-	let resultEnd = checkForEndOfGame();
+	let resultEnd = checkForEndOfGame({ lastAction: 'stand' });
+	showStatus({ lastAction: 'stand' });
 	if (resultEnd.gameOver) {
 		endGame();
 	}
-	showStatus();
+	
 });
