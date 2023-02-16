@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Game Select</title>
-  <link href="/css/style.css" rel="stylesheet" type="text/css">
+  <link href="/css/gamepage.css" rel="stylesheet" type="text/css">
 	<script src="/js/gamepage.js"></script>  
 </head>
 <body>
@@ -25,35 +25,44 @@
 		</div>
 </div>
 	
-
-<div class="main" >
-	
-  <form method="post" action="/secured/start-game">
-    <div class="game-options">
-        <div class="game-option">
-            <input type="radio" name="game" value="blackjack" id="blackjack"/>
-            <label for="blackjack">BlackJack</label>
-            <p>Play the classic card game against the dealer.</p>
-        </div>
-        <div class="game-option">
-            <input type="radio" name="game" value="roulette" id="roulette"/>
-            <label for="roulette">Roulette</label>
-            <p>Spin the wheel and place your bets.</p>
-        </div>
-        <div class="game-option">
-            <input type="radio" name="game" value="coinflip" id="coinflip"/>
-            <label for="coinflip">Coinflip</label>
-            <p>Heads or tails? Place your bets.</p>
-        </div>
-        <div class="game-option">
-            <input type="radio" name="game" value="slots" id="slots"/>
-            <label for="slots">Slots</label>
-            <p>Spin the reels and win big.</p>
-        </div>
-    </div>
-    <input type="submit" value="Start Game">
-  </form>
+ <div class="main">
+  <div class="game-options">
+    <form action="/secured/start-game" method="post">
+      <div class="game-card">
+        <img src="/img/blackjack.png" alt="Blackjack">
+        <h3>Blackjack</h3>
+        <p>Play the classic card game against the dealer.</p>
+        <button type="submit" name="game" value="blackjack">Play now</button>
+      </div>
+    </form>
+    <form action="/secured/start-game" method="post">
+      <div class="game-card">
+        <img src="/img/roulette.jpg" alt="Roulette">
+        <h3>Roulette</h3>
+        <p>Spin the wheel and place your bets.</p>
+        <button type="submit" name="game" value="roulette">Play now</button>
+      </div>
+    </form>
+    <form action="/secured/start-game" method="post">
+      <div class="game-card">
+        <img src="/img/coinflip.jpg" alt="Coinflip">
+        <h3>Coinflip</h3>
+        <p>Heads or tails? Place your bets.</p>
+        <button type="submit" name="game" value="coinflip">Play now</button>
+      </div>
+    </form>
+    <form action="/secured/start-game" method="post">
+      <div class="game-card">
+        <img src="/img/slots.jpg" alt="Slots">
+        <h3>Slots</h3>
+        <p>Spin the reels and win big.</p>
+        <button type="submit" name="game" value="slots">Play now</button>
+      </div>
+    </form>
+  </div>
 </div>
+ 
+
   
 </body>
 </html>

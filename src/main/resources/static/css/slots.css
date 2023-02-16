@@ -1,4 +1,6 @@
 @charset "ISO-8859-1";
+html { height: 100% }
+
  body {
 	background-color: #f2f2f2;
 	font-family: Arial, sans-serif;
@@ -7,7 +9,6 @@
 	background-image: url('/img/background.jpg');
   background-repeat: no-repeat;
   background-position: center center;
-  height: 100vh;
   animation: background-change 30s linear infinite;
  }
   

@@ -9,46 +9,44 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/secured")
 public class ControllerGames {
 
-	@RequestMapping("/blackjack")
-	public String blackjack() {
-	return "blackjack";
-	}
+    @RequestMapping("/blackjack")
+    public String blackjack() {
+        return "blackjack";
+    }
 
-	@RequestMapping("/roulette")
-	public String roulette() {
-	return "roulette";
-	}
+    @RequestMapping("/roulette")
+    public String roulette() {
+        return "roulette";
+    }
 
-	@RequestMapping("/coinflip")
-	public String coinflip() {
-	return "coinflip";
-	}
+    @RequestMapping("/coinflip")
+    public String coinflip() {
+        return "coinflip";
+    }
 
-	@RequestMapping("/slots")
-	public String slots() {
-	return "slots";
-	}
+    @RequestMapping("/slots")
+    public String slots() {
+        return "slots";
+    }
 
-	@RequestMapping("/game-select")
-	public String gameSelect() {
-	return "game-select";
-	}
-	
-	  @RequestMapping("/start-game")
-	  public String startGame(@RequestParam("game") String game) {
-	    switch (game) {
-	      case "blackjack":
-	        return "redirect:/secured/blackjack";
-	      case "roulette":
-	        return "redirect:/secured/roulette";
-	      case "coinflip":
-	        return "redirect:/secured/coinflip";
-	      case "slots":
-	        return "redirect:/secured/slots";
-	      default:
-	        return "redirect:/secured/game-select";
-	    }
-	  }
-	}
+    @RequestMapping("/game-select")
+    public String gameSelect() {
+        return "game-select";
+    }
 
-
+    @PostMapping("/start-game")
+    public String startGame(@RequestParam("game") String game) {
+        switch (game) {
+            case "blackjack":
+                return "redirect:/secured/blackjack";
+            case "roulette":
+                return "redirect:/secured/roulette";
+            case "coinflip":
+                return "redirect:/secured/coinflip";
+            case "slots":
+                return "redirect:/secured/slots";
+            default:
+                return "redirect:/secured/game-select";
+        }
+    }
+}
