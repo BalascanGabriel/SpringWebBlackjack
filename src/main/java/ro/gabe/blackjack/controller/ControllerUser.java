@@ -107,8 +107,7 @@ public class ControllerUser {
 	@RequestMapping(value="/secured/change-password", method = RequestMethod.POST)
 	public String changePassword(@RequestParam("currentPassword") String currentPassword, @RequestParam("newPassword") String newPassword, HttpSession session) {
 		
-		
-		
+			
 		 User user = (User) session.getAttribute("user");
 	        if (user.getPassword().equals(currentPassword)) {
 	            user.setPassword(newPassword);
