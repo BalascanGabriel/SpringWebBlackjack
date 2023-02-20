@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ro.gabe.blackjack.dao.DaoUser;
@@ -51,6 +52,11 @@ public class ControllerUser {
 		return "logout";
 	}
 	
+	@RequestMapping(value="/secured/account")
+	public String account() {
+		return "account";
+	}
+	
 	@RequestMapping(value="/secured/user-lista")
 	public String paginaUserii(Model model) {
 		Iterable<User> useriiDb = dao.findAll(); // new ArrayList<>();
@@ -86,4 +92,34 @@ public class ControllerUser {
 		session.invalidate();
 		return "redirect:/login";
 	}
+	
+	@RequestMapping(value="/secured/change-username", method = RequestMethod.POST)
+	public String changeUsername(@RequestParam("newUsername") String newUsername,HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+		user.setName(newUsername);
+		dao.save(user);
+        session.setAttribute("user", user);
+        model.addAttribute("successMessage","Username changed with success");
+		
+		return "redirect:/secured/gamepage";
+	}
+	
+	@RequestMapping(value="/secured/change-password", method = RequestMethod.POST)
+	public String changePassword(@RequestParam("currentPassword") String currentPassword, @RequestParam("newPassword") String newPassword, HttpSession session) {
+		
+		
+		
+		 User user = (User) session.getAttribute("user");
+	        if (user.getPassword().equals(currentPassword)) {
+	            user.setPassword(newPassword);
+	            dao.save(user);
+	            session.setAttribute("user", user);
+	            return "redirect:/secured/gamepage";
+	        } else {
+	            // display error message
+	            return "redirect:/secured/user-info";
+	        }
+	    }
+	
+
 }
