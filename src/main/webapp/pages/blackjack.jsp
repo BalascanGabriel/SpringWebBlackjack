@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Blackjack</title>
   <link href="/css/blackjack.css" rel="stylesheet" type="text/css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+  
 
 <!-- Bug spotted dealer has 21 from the first hand -->
 <!-- Also if player has 21 from the first hand -->

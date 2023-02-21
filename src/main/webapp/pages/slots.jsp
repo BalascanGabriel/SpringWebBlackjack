@@ -2,6 +2,7 @@
 <html>
   <head>
    <link href="/css/slots.css" rel="stylesheet" type="text/css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     
   </head>
   <body>
@@ -30,6 +31,6 @@
     </table>
     <input type="button" value="Spin" onclick="spin()" />
     
-    <script src="js/slots.js"></script>
+    <script src="/js/slots.js"></script>
   </body>
 </html>

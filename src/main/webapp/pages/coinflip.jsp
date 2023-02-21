@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Coin Flip Game</title>
 	  <link href="/css/gamepage.css" rel="stylesheet" type="text/css">
+	      <meta name="viewport" content="width=device-width, initial-scale=1">
+	  
 
 <style>
     #coin {
@@ -31,7 +33,7 @@
 
 #coin.flip img {
     opacity: 1;
-    animation: flip 0.5s;
+    animation: flip 1s;
 }
 
 @keyframes flip {
@@ -39,7 +41,7 @@
         transform: rotateY(0deg);
     }
     to {
-        transform: rotateY(180deg);
+        transform: rotateY(480deg);
     }
 }
 
