@@ -1,5 +1,6 @@
 package ro.gabe.blackjack.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,9 +14,14 @@ public class User {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Column(name="Password")
 	private String password;
+	@Column(name="Name")
 	private String name;
+	@Column(name="Email")
 	private String email;
+	@Column(name="Balance")
 	private Integer balance;
 	
 	public User() {

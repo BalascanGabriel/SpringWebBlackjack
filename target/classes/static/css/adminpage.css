@@ -1,0 +1,52 @@
+@charset "ISO-8859-1";
+body {
+  margin: 0px;
+  font-family: 'Montserrat', sans-serif; /* Use a fancy font for the text */
+	background: linear-gradient(to right, #2b2e4a, #462066); background-attachment: fixed;
+  background-image: url('/img/background.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  
+  
+  animation: background-change 30s linear infinite;}
+  
+  @keyframes background-change {
+	0% {
+	background-position: center center;
+	}
+	100% {
+	background-position: 100% center;
+	}
+}
+
+h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color : #987456;
+}
+
+h3 {
+	color : #987456;
+	text-align: center;
+  margin-top: 30px;
+}
+
+th{
+	color:beige;
+	font-size: 20px;
+	margin-top: 10px;
+}
+ td{
+ 	color:beige;
+	font-size: 15px;
+	margin-top: 10px;
+ }
+ 
+ table{
+ margin: auto;
+ }
+ 
+ #buttons{
+ display:flex;
+justify-content: center; 
+ }

@@ -6,6 +6,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link href="/css/adminpage.css" rel="stylesheet" type="text/css">
 
 <title>Admin Dashboard</title>
 </head>
@@ -16,13 +17,7 @@
 		// List<ActivityEntry> logs = (List<ActivityEntry>)request.getAttribute("LOGS");
 	%>
 	
-	<input>
-	
-	
-	
-	
-	
-	<h3>Activity Log</h3>
+	<h3>Activity Log : </h3>
 	<table border="1">
 		<thead>
 			<tr>
@@ -31,31 +26,49 @@
 				<th>User IP</th>
 			</tr>
 		</thead>
-		<tbody id="tbody-logs">
-		
-			<%--
+		<tbody id="tbody-logs" >
+		<%--
 				for(ActivityEntry log : logs){
-					
 					<tr>
 						<td><%= log.getId() %></td>
 						<td><%= log.getLastLogin() %></td>
 						<td><%= log.getUserIp() %></td>
 					</tr>
-				
 				}
 			 --%>
 		</tbody>
 		
 	</table>
-	
+	<div id="buttons">
 	<button id="next" style="display:none">Next</button>
 	<button id="previous" style="display:none">Previous</button>
-	
 	<button id="load-logs">Load logs</button>
+	<button id="hide-logs">Hide</button>
+	</div>
+	
+	<h3>Users : </h3>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Balance</th>
+			</tr>
+		</thead>
+		<tbody id="tbody-users">
+		
+		</tbody>
+	</table>
+	<div id="buttons">
+		<button id="load-users">Load users</button>
+		<button id="hide-users">Hide</button>
+	</div>	
 	<script>
 	let pageNumber = 0;
 	document.getElementById('load-logs').addEventListener('click', function(){
 		pageNumber = 0;
+		document.getElementById('tbody-logs').style.visibility = "visible";
 		fetch('http://localhost:9050/rest/activity/by-page/'+pageNumber)
 			.then(date => date.json())
 				.then(date => {
@@ -140,6 +153,31 @@
 		console.log(pageNumber);
 	});
 	
+	document.getElementById('hide-logs').addEventListener('click', function(){
+		document.getElementById('tbody-logs').style.visibility = "hidden";
+		document.getElementById('previous').style.display = "none";
+		document.getElementById('load-logs').style.display = "block";
+		document.getElementById('next').style.display = "none";
+		pageNumber = 0;
+		console.log(pageNumber);
+	});
+	
+	
+	document.getElementById('load-users').addEventListener('click',function(){
+		console.log('load users button pressed');
+		let corp = document.getElementById('tbody-users');
+		let continut = '';
+		
+		fetch('http://localhost:9050/rest/user/toti-userii')
+			.then(date => date.json())
+				.then(date =>{
+				for(let user of date){
+					continut += `<tr><td>${user.id}</td><td>${user.name}</td><td>${user.email}</td><td>${user.balance}</td></tr>` ;
+				}
+				console.log('continut: ', continut);
+				corp.innerHTML = continut;
+			})	
+	});
 	
 		/*document.getElementById('load-logs').addEventListener('click', function(){
 			console.log('loading logs from server and populating table body');
@@ -158,13 +196,7 @@
 					// asta se executa async
 					for(let log of date){
 						
-						/* {
-							"id": 2,
-							"lastLogin": "2023-01-21T22:00:00.000+00:00",
-							"userIp": "0:0:0:0:0:0:0:1"
-							}, 
-						
-						continut += `<tr><td>${log.id}</td><td>${log.lastLogin}</td><td>${log.userIp}</td></tr>`;
+						continut += `<tr><td>${log.Id}</td><td>${log.lastLogin}</td><td>${log.userIp}</td></tr>`;
 					}
 					console.log('continut: ', continut);
 					corp.innerHTML = continut;
