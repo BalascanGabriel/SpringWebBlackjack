@@ -104,7 +104,6 @@ display: flex;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 1200px;
   
 }
 
@@ -159,16 +158,24 @@ display: flex;
   transition: background-color 0.3s ease-in-out;
 }
 
-div.game-options{
-	max-height: 500px;
-	overflow: scroll;
-}
-
 .game-card button:hover {
   background-color: #FFA000;
 }
-/* @media only screen and (max-width: 600px) {
-	body{
-		background-repeat: repeat-y;
-	}
-} */
+
+div.game-options {
+  max-height: 80vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 767px) {
+  div.game-options {
+    overflow-y: scroll;
+  }
+}
+
+@media only screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 1) {
+  div.game-options {
+    max-height: 500px;
+  }
+}

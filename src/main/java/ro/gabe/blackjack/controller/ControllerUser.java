@@ -39,6 +39,12 @@ public class ControllerUser {
 		return "register";
 	}
 	
+	@RequestMapping(value="/secured/admin-dashboard")
+	public String admin() {
+		return "admin-dashboard";
+	}
+
+	
 	@RequestMapping(value="/secured/gamepage")
 	public String gamePage( HttpSession session) {
 //		if(session.getAttribute("user") == null) {
@@ -77,6 +83,10 @@ public class ControllerUser {
 	public String processLogin(@ModelAttribute User user, RedirectAttributes redirectAttributes, HttpSession session) {
 		System.out.println("Login parameters " + user);
 		
+		 if (user.getName().equals("admin") && user.getPassword().equals("admin")) {
+		        return "redirect:/secured/admin-dashboard";
+		    }
+		
 		User dbUser = dao.findByNameAndPassword(user.getName(), user.getPassword());
 	    if (dbUser != null) {
 	    	session.setAttribute("user", dbUser);
@@ -94,7 +104,7 @@ public class ControllerUser {
 	}
 	
 	@RequestMapping(value="/secured/change-username", method = RequestMethod.POST)
-	public String changeUsername(@RequestParam("newUsername") String newUsername,HttpSession session, Model model) {
+	public String changeUsername(@RequestParam("username") String newUsername,HttpSession session, Model model) {
 		User user = (User) session.getAttribute("user");
 		user.setName(newUsername);
 		dao.save(user);
@@ -105,7 +115,7 @@ public class ControllerUser {
 	}
 	
 	@RequestMapping(value="/secured/change-password", method = RequestMethod.POST)
-	public String changePassword(@RequestParam("currentPassword") String currentPassword, @RequestParam("newPassword") String newPassword, HttpSession session) {
+	public String changePassword(@RequestParam("current-password") String currentPassword, @RequestParam("new-password") String newPassword, HttpSession session) {
 		
 			
 		 User user = (User) session.getAttribute("user");
